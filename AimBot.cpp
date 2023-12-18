@@ -41,6 +41,9 @@ struct AimBot {
         //turn into integers
         int totalPitchIncrementInt = roundHalfEven(atLeast_1_AwayFromZero(totalPitchIncrement));
         int totalYawIncrementInt = roundHalfEven(atLeast_1_AwayFromZero(totalYawIncrement));
+
+        if (target->aimbotDesiredAnglesIncrement.magnitude() > cl->AIMBOT_FOV) return;
+
         //deadzone - are we close enough yet?
         if (fabs(target->aimbotDesiredAnglesIncrement.x) < cl->AIMBOT_DEADZONE) totalPitchIncrementInt = 0;
         if (fabs(target->aimbotDesiredAnglesIncrement.y) < cl->AIMBOT_DEADZONE) totalYawIncrementInt = 0;

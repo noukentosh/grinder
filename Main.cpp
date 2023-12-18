@@ -39,6 +39,7 @@ int main() {
             //read level and make sure it is playable
             level->readFromMemory();
             if (!level->playable) {
+                sense->maphack_enabled = false;
                 printf("Waiting for a playable level! Sleeping 10 seconds... \n");
                 std::this_thread::sleep_for(std::chrono::milliseconds(10000));
                 continue;
@@ -47,6 +48,8 @@ int main() {
             //read localPlayer and make sure he is valid
             localPlayer->readFromMemory();
             if (!localPlayer->isValid()) throw std::invalid_argument("LocalPlayer invalid!");
+
+            float WorldTime = mem::Read<float>(localPlayer->base + OFF_WORLD_TIME, "World Time");
 
             //read players
             players->clear();
@@ -69,6 +72,14 @@ int main() {
             aimBot->aimAssist(counter);
             sense->modifyHighlights();
             sense->glowPlayers();
+
+            if(WorldTime < 130.f) {
+                sense->maphack_enabled = false;
+            }
+
+            if(WorldTime > 130.f && !sense->maphack_enabled && display->keyDown("XK_F9")) {
+                sense->maphack();
+            }
 
             //check how fast we completed all the processing and if we still have time left to sleep
             int processingTime = static_cast<int>(util::currentEpochMillis() - startTime);

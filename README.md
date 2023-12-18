@@ -40,7 +40,7 @@ Open steam and start apex and wait for it to fully start
 
 ### 5. Run the cheato
 ```
-sudo ./a.out
+sudo ./ntapx
 ```
 
 ### 6. Profit

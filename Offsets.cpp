@@ -26,6 +26,7 @@ constexpr long OFF_LAST_VISIBLE_TIME = 0x19bd + 0x3;          //[RecvTable.DT_Ba
 constexpr long OFF_LAST_AIMEDAT_TIME = 0x19bd + 0x3 + 0x8;    //[RecvTable.DT_BaseCombatCharacter]->m_hudInfo_visibilityTestAlwaysPasses + 0x3 + 0x8
 constexpr long OFF_VIEW_ANGLES = 0x2564 - 0x14;               //[DataMap.C_Player]-> m_ammoPoolCapacity - 0x14
 constexpr long OFF_PUNCH_ANGLES = 0x2468;                     //[?]->m_currentFrameLocalPlayer.m_vecPunchWeapon_Angle
+constexpr long OFF_WORLD_TIME = 0x20b8;                       //m_currentFramePlayer.timeBase
 //weapon
 constexpr long OFF_WEAPON_HANDLE = 0x1964;                    //[RecvTable.DT_Player]->m_latestPrimaryWeapons
 constexpr long OFF_WEAPON_INDEX = 0x17a8;                     //[RecvTable.DT_WeaponX]->m_weaponNameIndex

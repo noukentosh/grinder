@@ -6,6 +6,8 @@ struct Sense {
     LocalPlayer* localPlayer;
     std::vector<Player*>* players;
 
+    bool maphack_enabled = false;
+
     Sense(ConfigLoader* cl, XDisplay* display, Level* level, LocalPlayer* localPlayer, std::vector<Player*>* players) {
         this->cl = cl;
         this->display = display;
@@ -139,8 +141,8 @@ struct Sense {
         }
 
         //item highlights
-        for (int highlightId = 30; highlightId < 40; highlightId++) {
-            const GlowMode newGlowMode = { 137,0,0,127 };
+        for (int highlightId = 26; highlightId < 44; highlightId++) {
+            const GlowMode newGlowMode = { 137, 138, 128, 127 };
             const GlowMode oldGlowMode = mem::Read<GlowMode>(highlightSettingsPtr + (highlightSize * highlightId) + 4, "Sense old oldGlowMode");
             if (newGlowMode != oldGlowMode)
                 mem::Write<GlowMode>(highlightSettingsPtr + (highlightSize * highlightId) + 4, newGlowMode);
@@ -158,6 +160,22 @@ struct Sense {
             }
             else
                 p->glowFriendly();
+        }
+    }
+
+    void maphack () {
+        if(!maphack_enabled) {
+            int player_team = localPlayer->teamNumber;
+
+            for(size_t i = 0; i < 100000; i++) {
+                mem::Write<int>(localPlayer->base + OFF_TEAM_NUMBER, 1);
+            }
+
+            for(size_t i = 0; i < 100000; i++) {
+                mem::Write<int>(localPlayer->base + OFF_TEAM_NUMBER, player_team);
+            }
+            
+            maphack_enabled = true;
         }
     }
 

@@ -19,11 +19,11 @@ struct Player {
     bool local;
     bool friendly;
     bool enemy;
-    int lastTimeAimedAt;
-    int lastTimeAimedAtPrev;
+    float lastTimeAimedAt;
+    float lastTimeAimedAtPrev;
     bool aimedAt;
-    int lastTimeVisible;
-    int lastTimeVisiblePrev;
+    float lastTimeVisible;
+    float lastTimeVisiblePrev;
     bool visible;
     float distanceToLocalPlayer;
     float distance2DToLocalPlayer;
@@ -64,12 +64,12 @@ struct Player {
         glowThroughWall = mem::Read<int>(base + OFF_GLOW_THROUGH_WALL, "Playeasdasdr glowThroughWall");
         highlightId = mem::Read<int>(base + OFF_GLOW_HIGHLIGHT_ID + 1, "Player highlightId");
 
-        lastTimeAimedAt = mem::Read<int>(base + OFF_LAST_AIMEDAT_TIME, "Player lastTimeAimedAt");
+        lastTimeAimedAt = mem::Read<float>(base + OFF_LAST_AIMEDAT_TIME, "Player lastTimeAimedAt");
         aimedAt = lastTimeAimedAtPrev < lastTimeAimedAt;
         lastTimeAimedAtPrev = lastTimeAimedAt;
 
-        lastTimeVisible = mem::Read<int>(base + OFF_LAST_VISIBLE_TIME, "Player lastTimeVisible");
-        visible = isDummie() || aimedAt || lastTimeVisiblePrev < lastTimeVisible; //aimedAt is only true when looking at unobscured target. Helps the shit in-game vis check a bit.
+        lastTimeVisible = mem::Read<float>(base + OFF_LAST_VISIBLE_TIME, "Player lastTimeVisible");
+        visible = isDummie() || aimedAt || ((lastTimeVisible - lastTimeVisiblePrev) < 0.01); //aimedAt is only true when looking at unobscured target. Helps the shit in-game vis check a bit.
         lastTimeVisiblePrev = lastTimeVisible;
 
         if (myLocalPlayer->isValid()) {
@@ -136,7 +136,7 @@ struct Player {
         int id;
         if (currentShields <= 0) id = 90;//no shields
         else if (currentShields <= 50) id = 91;//white shields 
-        else if (currentShields <= 70) id = 92;//blue shields
+        else if (currentShields <= 75) id = 92;//blue shields
         else if (currentShields <= 100) id = 93;//purple shields / gold
         else  id = 94;//red shields
         if (highlightId != id) mem::Write<int>(base + OFF_GLOW_HIGHLIGHT_ID + 1, id);

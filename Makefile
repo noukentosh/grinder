@@ -14,16 +14,16 @@ all: rebuild;
 
 # Clean up object files and the executable
 clean:
-	rm -f a.out
+	rm -f ntapx
 
 # Compilation and linking
-a.out: $(SRCS)
+ntapx: $(SRCS)
 	$(CXX) $^ -o $@ $(LIBS)
 
 
 # clean & build
 rebuild:
 	@$(MAKE) clean
-	@$(MAKE) a.out
+	@$(MAKE) ntapx
 	echo "SUCCESS!"
 
