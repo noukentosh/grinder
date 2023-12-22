@@ -69,7 +69,7 @@ struct Player {
         lastTimeAimedAtPrev = lastTimeAimedAt;
 
         lastTimeVisible = mem::Read<float>(base + OFF_LAST_VISIBLE_TIME, "Player lastTimeVisible");
-        visible = isDummie() || aimedAt || ((lastTimeVisible - lastTimeVisiblePrev) < 0.01); //aimedAt is only true when looking at unobscured target. Helps the shit in-game vis check a bit.
+        visible = isDummie() || aimedAt || ((lastTimeVisible - lastTimeVisiblePrev) < 0.1); //aimedAt is only true when looking at unobscured target. Helps the shit in-game vis check a bit.
         lastTimeVisiblePrev = lastTimeVisible;
 
         if (myLocalPlayer->isValid()) {
